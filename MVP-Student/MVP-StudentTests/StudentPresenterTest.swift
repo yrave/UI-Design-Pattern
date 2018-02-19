@@ -41,8 +41,6 @@ class StudentPresentableViewMock: StudentPresentableView {
     }
     
     var newGradeTextFieldText: String? = "ABC"
-    
-    
 }
 
 class StudentPresenterTest: XCTestCase {
@@ -63,6 +61,7 @@ class StudentPresenterTest: XCTestCase {
 
     func testFullName() {
         XCTAssertEqual(view.fullName, "John Doe")
+        
         let abc = "ABC"
         presentable.studentPresentableView.setFullNameText(abc)
         XCTAssertEqual(view.fullName, abc)
@@ -70,6 +69,10 @@ class StudentPresenterTest: XCTestCase {
     
     func testIDName() {
         XCTAssertEqual(view.studentID, "123456")
+        
+        let id = "123"
+        presentable.studentPresentableView.setStudentIDText(id)
+        XCTAssertEqual(view.studentID, id)
     }
     
     func testGrades() {
@@ -79,17 +82,21 @@ class StudentPresenterTest: XCTestCase {
     func testNewGrades() {
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
         XCTAssertEqual(view.gpa, "69")
+        
         presenter.addGrade(text: "1000")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
         XCTAssertEqual(view.gpa, "69")
+        
         presenter.addGrade(text: "100")
+        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
+        XCTAssertEqual(view.gpa, "74")
+        
+        presenter.addGrade(text: "-30")
+        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
+        XCTAssertEqual(view.gpa, "74")
+        
+        presenter.addGrade(text: "abc")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
         XCTAssertEqual(view.gpa, "74")
     }
 }
-
-
-
-
-
-
