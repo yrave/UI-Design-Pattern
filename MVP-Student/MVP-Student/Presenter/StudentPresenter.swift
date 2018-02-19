@@ -26,6 +26,9 @@ class StudentPresenter {
     private func setupStudent() {
         self.studentView.setFullNameText("\(self.student.firstName) \(self.student.lastName)")
         self.studentView.setStudentIDText("\(student.studentID)")
+    }
+    
+    public func startSetup() {
         setupStudentGrades()
     }
 

@@ -11,12 +11,12 @@
 		963A4030203B3D660061F10E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 963A402E203B3D660061F10E /* Main.storyboard */; };
 		963A4032203B3D660061F10E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 963A4031203B3D660061F10E /* Assets.xcassets */; };
 		963A4035203B3D660061F10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 963A4033203B3D660061F10E /* LaunchScreen.storyboard */; };
-		963A4040203B3D670061F10E /* MVP_StudentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A403F203B3D670061F10E /* MVP_StudentTests.swift */; };
 		963A4050203B3DB70061F10E /* StudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A404B203B3DB70061F10E /* StudentView.swift */; };
 		963A4051203B3DB70061F10E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A404D203B3DB70061F10E /* ViewController.swift */; };
 		963A4052203B3DB70061F10E /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A404F203B3DB70061F10E /* Student.swift */; };
 		963A4055203B3E6B0061F10E /* StudentPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A4054203B3E6B0061F10E /* StudentPresenter.swift */; };
 		963A4057203B43BF0061F10E /* StudentPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A4056203B43BF0061F10E /* StudentPresentable.swift */; };
+		963A4059203B45480061F10E /* StudentPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A4058203B45480061F10E /* StudentPresenterTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +37,13 @@
 		963A4034203B3D660061F10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		963A4036203B3D660061F10E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		963A403B203B3D670061F10E /* MVP-StudentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MVP-StudentTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		963A403F203B3D670061F10E /* MVP_StudentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVP_StudentTests.swift; sourceTree = "<group>"; };
 		963A4041203B3D670061F10E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		963A404B203B3DB70061F10E /* StudentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentView.swift; sourceTree = "<group>"; };
 		963A404D203B3DB70061F10E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		963A404F203B3DB70061F10E /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		963A4054203B3E6B0061F10E /* StudentPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentPresenter.swift; sourceTree = "<group>"; };
 		963A4056203B43BF0061F10E /* StudentPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentPresentable.swift; sourceTree = "<group>"; };
+		963A4058203B45480061F10E /* StudentPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentPresenterTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +101,8 @@
 		963A403E203B3D670061F10E /* MVP-StudentTests */ = {
 			isa = PBXGroup;
 			children = (
-				963A403F203B3D670061F10E /* MVP_StudentTests.swift */,
 				963A4041203B3D670061F10E /* Info.plist */,
+				963A4058203B45480061F10E /* StudentPresenterTest.swift */,
 			);
 			path = "MVP-StudentTests";
 			sourceTree = "<group>";
@@ -194,6 +194,7 @@
 					};
 					963A403A203B3D660061F10E = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 963A4026203B3D660061F10E;
 					};
@@ -256,7 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				963A4040203B3D670061F10E /* MVP_StudentTests.swift in Sources */,
+				963A4059203B45480061F10E /* StudentPresenterTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,12 +433,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RLZ3HXUMSR;
 				INFOPLIST_FILE = "MVP-StudentTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Rave.MVP-StudentTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MVP-Student.app/MVP-Student";
@@ -449,6 +452,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RLZ3HXUMSR;
 				INFOPLIST_FILE = "MVP-StudentTests/Info.plist";
