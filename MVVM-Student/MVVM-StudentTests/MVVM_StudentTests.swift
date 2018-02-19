@@ -11,26 +11,52 @@ import XCTest
 
 class MVVM_StudentTests: XCTestCase {
     
+    let student = Student(
+        firstName: "Max", lastName: "Meier",
+        grades: [40, 40, 80, 60, 85], studentID: 12345678)
+    
+    var viewModel: StudentViewModel!
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        viewModel = StudentViewModel(student: student)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testFullName() {
+        XCTAssertEqual(viewModel.fullName, "Max Meier")
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testStudentID() {
+        XCTAssertEqual(viewModel.studentID, "12345678")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testNewGrade() {
+        var grades: String!
+        var avg: String!
+        var input = "100"
+        viewModel.observeGrades = { grades = $0 }
+        viewModel.observeGradeAverage = { avg = $0 }
+        viewModel.updateGradeInputText = { input = $0 }
+        
+        XCTAssertEqual(grades, "40, 40, 80, 60, 85")
+        XCTAssertEqual(avg, "61")
+        
+        try? viewModel.addGrade(text: input)
+        XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
+        XCTAssertEqual(avg, "67")
+        XCTAssertEqual(input, "")
+        
+        try? viewModel.addGrade(text: "Hi")
+        XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
+        XCTAssertEqual(avg, "67")
+        
+        try? viewModel.addGrade(text: "-30")
+        XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
+        XCTAssertEqual(avg, "67")
+        
+        try? viewModel.addGrade(text: "200")
+        XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
+        XCTAssertEqual(avg, "67")
     }
     
 }

@@ -10,10 +10,13 @@ import Foundation
 import UIKit
 
 class StudentView: UIView {
-    lazy var viewModel = StudentViewModel(
-        updateGradeInputText: { [weak self] in self?.newGradeTextField.text = $0 },
-        observeGradeAverage: { [weak self] in self?.gradePointAverageLabel.text = $0 },
-        observeGrades: { [weak self] in self?.allGradesLabel.text = $0 })
+    lazy var viewModel: StudentViewModel = {
+        let vm = StudentViewModel()
+        vm.updateGradeInputText = { [weak self] in self?.newGradeTextField.text = $0 }
+        vm.observeGradeAverage = { [weak self] in self?.gradePointAverageLabel.text = $0 }
+        vm.observeGrades = { [weak self] in self?.allGradesLabel.text = $0 }
+        return vm
+    }()
     
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var gradePointAverageLabel: UILabel!

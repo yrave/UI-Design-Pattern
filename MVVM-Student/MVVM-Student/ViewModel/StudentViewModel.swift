@@ -9,20 +9,26 @@
 import Foundation
 
 class StudentViewModel {
-    private let student = Student(
-        firstName: "John", lastName: "Doe",
-        grades: [50, 50, 100, 60, 85], studentID: 123456)
+    private let student: Student
+    var updateGradeInputText: ((String) -> ())?
+    private func callUpdateGrade() {
+        self.updateGradeInputText?("")
+    }
+    var observeGradeAverage: ((String) -> ())? {
+        didSet { self.callObserveGradeAverage() }
+    }
+    private func callObserveGradeAverage() {
+        self.observeGradeAverage?(self.avg)
+    }
+    var observeGrades: ((String) -> ())? {
+        didSet { self.callObserveGrades() }
+    }
+    private func callObserveGrades() { self.observeGrades?(self.grades) }
     
-    var updateGradeInputText: (String) -> ()
-    var observeGradeAverage: (String) -> ()
-    var observeGrades: (String) -> ()
-    
-    init(updateGradeInputText: @escaping (String) -> (), observeGradeAverage: @escaping (String) -> (), observeGrades: @escaping (String) -> ()) {
-        self.updateGradeInputText = updateGradeInputText
-        self.observeGradeAverage = observeGradeAverage
-        self.observeGrades = observeGrades
-        
-        self.updateObservers()
+    init(student: Student? = nil) {
+        self.student = student ?? Student(
+            firstName: "John", lastName: "Doe",
+            grades: [50, 50, 100, 60, 85], studentID: 123456)
     }
     
     var fullName: String {
@@ -46,9 +52,9 @@ class StudentViewModel {
     }
     
     fileprivate func updateObservers() {
-        self.observeGrades(self.grades)
-        self.observeGradeAverage(self.avg)
-        self.updateGradeInputText("")
+        self.callUpdateGrade()
+        self.callObserveGradeAverage()
+        self.callObserveGrades()
     }
     
     func addGrade(text: String?) throws {
