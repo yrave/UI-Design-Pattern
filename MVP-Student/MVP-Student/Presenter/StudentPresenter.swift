@@ -10,30 +10,30 @@ import Foundation
 import UIKit
 
 class StudentPresenter {
-    
+
     init(presentable: StudentPresentable, student: Student) {
         self.presentable = presentable
         self.studentView = presentable.studentPresentableView
         self.student = student
         setupStudent()
     }
-    
+
     private weak var presentable: StudentPresentable!
     private weak var studentView: StudentPresentableView!
 
     private var student: Student
-    
+
     private func setupStudent() {
-        self.studentView.fullNameLabel.text = "\(self.student.firstName) \(self.student.lastName)"
-        self.studentView.studentIDLabel.text = "\(student.studentID)"
+        self.studentView.setFullNameText("\(self.student.firstName) \(self.student.lastName)")
+        self.studentView.setStudentIDText("\(student.studentID)")
         setupStudentGrades()
     }
-    
+
     private func setupStudentGrades() {
-        self.studentView.allGradesLabel.text = student.grades.map({ "\($0)" }).joined(separator: ", ")
-        self.studentView.gradePointAverageLabel.text = "\(student.grades.reduce(0, +) / student.grades.count)"
+        self.studentView.setAllGradesText(student.grades.map({ "\($0)" }).joined(separator: ", "))
+        self.studentView.setGradePointAverageText("\(student.grades.reduce(0, +) / student.grades.count)")
     }
-    
+
     func addGrade(text: String?) {
         guard let grade = text.flatMap({ Int($0) }) else {
             presentable.showError()
@@ -42,10 +42,9 @@ class StudentPresenter {
         do {
             try student.add(grade: grade)
             setupStudentGrades()
-            studentView.newGradeTextField.text = ""
+            studentView.newGradeTextFieldText = ""
         } catch {
             presentable.showError()
         }
     }
 }
-

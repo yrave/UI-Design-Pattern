@@ -7,14 +7,13 @@
 //
 
 import Foundation
-import UIKit
 
 protocol StudentPresentableView: class {
-    var fullNameLabel: UILabel! { get }
-    var gradePointAverageLabel: UILabel! { get }
-    var allGradesLabel: UILabel! { get }
-    var studentIDLabel: UILabel! { get }
-    var newGradeTextField: UITextField! { get }
+    func setFullNameText(_ value: String)
+    func setGradePointAverageText(_ value: String)
+    func setAllGradesText(_ value: String)
+    func setStudentIDText(_ value: String)
+    var newGradeTextFieldText: String? { get set }
 }
 
 protocol StudentPresentable: class {
