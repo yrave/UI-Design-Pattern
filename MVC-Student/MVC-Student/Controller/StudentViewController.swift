@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  StudentViewController.swift
 //  MVC-Student
 //
 //  Created by Yannick Rave on 19.02.18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class StudentViewController: UIViewController {
     
     @IBOutlet var studentView: StudentView!
     let student = Student(
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITextFieldDelegate {
+extension StudentViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let grade = textField.text.flatMap({ Int($0) }) else { return true } //TODO: Show error
         do {

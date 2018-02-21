@@ -12,7 +12,7 @@
 		963A406E203B58330061F10E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 963A406D203B58330061F10E /* Assets.xcassets */; };
 		963A4071203B58330061F10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 963A406F203B58330061F10E /* LaunchScreen.storyboard */; };
 		963A407C203B58330061F10E /* MVVM_StudentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A407B203B58330061F10E /* MVVM_StudentTests.swift */; };
-		963A408C203B585F0061F10E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A4087203B585F0061F10E /* ViewController.swift */; };
+		963A408C203B585F0061F10E /* StudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A4087203B585F0061F10E /* StudentViewController.swift */; };
 		963A408D203B585F0061F10E /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A4089203B585F0061F10E /* Student.swift */; };
 		963A408E203B585F0061F10E /* StudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A408B203B585F0061F10E /* StudentView.swift */; };
 		963A4093203B5E400061F10E /* StudentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 963A4092203B5E400061F10E /* StudentViewModel.swift */; };
@@ -38,7 +38,7 @@
 		963A4077203B58330061F10E /* MVVM-StudentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MVVM-StudentTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		963A407B203B58330061F10E /* MVVM_StudentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVM_StudentTests.swift; sourceTree = "<group>"; };
 		963A407D203B58330061F10E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		963A4087203B585F0061F10E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		963A4087203B585F0061F10E /* StudentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentViewController.swift; sourceTree = "<group>"; };
 		963A4089203B585F0061F10E /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		963A408B203B585F0061F10E /* StudentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentView.swift; sourceTree = "<group>"; };
 		963A4092203B5E400061F10E /* StudentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentViewModel.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 		963A4086203B585F0061F10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				963A4087203B585F0061F10E /* ViewController.swift */,
+				963A4087203B585F0061F10E /* StudentViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -240,7 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				963A408C203B585F0061F10E /* ViewController.swift in Sources */,
+				963A408C203B585F0061F10E /* StudentViewController.swift in Sources */,
 				963A408D203B585F0061F10E /* Student.swift in Sources */,
 				963A4093203B5E400061F10E /* StudentViewModel.swift in Sources */,
 				963A408E203B585F0061F10E /* StudentView.swift in Sources */,
