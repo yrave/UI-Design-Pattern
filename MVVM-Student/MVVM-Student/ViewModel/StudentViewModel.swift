@@ -30,6 +30,7 @@ class StudentViewModel {
     }
     
     var avg: String {
+        guard student.grades.count > 0 else { return "" }
         return "\(student.grades.reduce(0, +) / student.grades.count)"
     }
     

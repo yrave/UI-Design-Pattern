@@ -30,7 +30,12 @@ class StudentViewController: UIViewController {
     
     func setupStudentGrades() {
         self.studentView.allGradesLabel.text = student.grades.map({ "\($0)" }).joined(separator: ", ")
-        self.studentView.gradePointAverageLabel.text = "\(student.grades.reduce(0, +) / student.grades.count)"
+        self.studentView.gradePointAverageLabel.text = "\(self.average())"
+    }
+    
+    func average() -> Int {
+        guard student.grades.count > 0 else { return 0 }
+        return student.grades.reduce(0, +) / student.grades.count
     }
 }
 

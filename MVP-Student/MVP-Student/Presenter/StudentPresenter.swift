@@ -32,7 +32,12 @@ class StudentPresenter {
 
     private func setupStudentGrades() {
         self.studentView.setAllGradesText(student.grades.map({ "\($0)" }).joined(separator: ", "))
-        self.studentView.setGradePointAverageText("\(student.grades.reduce(0, +) / student.grades.count)")
+        self.studentView.setGradePointAverageText("\(self.average())")
+    }
+    
+    func average() -> Int {
+        guard student.grades.count > 0 else { return 0 }
+        return student.grades.reduce(0, +) / student.grades.count
     }
     
     enum GradeError: Error {
