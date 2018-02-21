@@ -11,7 +11,8 @@ import XCTest
 
 class StudentPresentableMock: StudentPresentable {
     var studentPresentableView: StudentPresentableView
-    func showError() { }
+    var showErrorCalled = 0
+    func showError() { self.showErrorCalled += 1 }
 
     public init(studentPresentableView: StudentPresentableView) {
         self.studentPresentableView = studentPresentableView
@@ -79,13 +80,19 @@ class StudentPresenterTest: XCTestCase {
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
     }
     
+    func testGPA() {
+        XCTAssertEqual(view.gpa, "69")
+    }
+    
     func testNewGrades() {
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
         XCTAssertEqual(view.gpa, "69")
+        XCTAssertEqual(presentable.showErrorCalled, 0)
         
         presenter.addGrade(text: "1000")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
         XCTAssertEqual(view.gpa, "69")
+        XCTAssertEqual(presentable.showErrorCalled, 1)
         
         presenter.addGrade(text: "100")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
@@ -94,9 +101,11 @@ class StudentPresenterTest: XCTestCase {
         presenter.addGrade(text: "-30")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
         XCTAssertEqual(view.gpa, "74")
+        XCTAssertEqual(presentable.showErrorCalled, 2)
         
         presenter.addGrade(text: "abc")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
         XCTAssertEqual(view.gpa, "74")
+        XCTAssertEqual(presentable.showErrorCalled, 3)
     }
 }
