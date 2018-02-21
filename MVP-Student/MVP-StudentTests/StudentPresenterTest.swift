@@ -9,16 +9,6 @@
 import XCTest
 @testable import MVP_Student
 
-class StudentPresentableMock: StudentPresentable {
-    var studentPresentableView: StudentPresentableView
-    var showErrorCalled = 0
-    func showError() { self.showErrorCalled += 1 }
-
-    public init(studentPresentableView: StudentPresentableView) {
-        self.studentPresentableView = studentPresentableView
-    }
-}
-
 class StudentPresentableViewMock: StudentPresentableView {
     var fullName: String = ""
     var gpa: String = ""
@@ -51,8 +41,7 @@ class StudentPresenterTest: XCTestCase {
         grades: [50, 50, 100, 60, 85], studentID: 123456)
     
     lazy var view = StudentPresentableViewMock()
-    lazy var presentable = StudentPresentableMock(studentPresentableView: self.view)
-    lazy var presenter = StudentPresenter(presentable: self.presentable, student: self.student)
+    lazy var presenter = StudentPresenter(studentView: self.view, student: self.student)
     
     override func setUp() {
         super.setUp()
@@ -64,7 +53,7 @@ class StudentPresenterTest: XCTestCase {
         XCTAssertEqual(view.fullName, "John Doe")
         
         let abc = "ABC"
-        presentable.studentPresentableView.setFullNameText(abc)
+        view.setFullNameText(abc)
         XCTAssertEqual(view.fullName, abc)
     }
     
@@ -72,7 +61,7 @@ class StudentPresenterTest: XCTestCase {
         XCTAssertEqual(view.studentID, "123456")
         
         let id = "123"
-        presentable.studentPresentableView.setStudentIDText(id)
+        view.setStudentIDText(id)
         XCTAssertEqual(view.studentID, id)
     }
     
@@ -87,25 +76,24 @@ class StudentPresenterTest: XCTestCase {
     func testNewGrades() {
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
         XCTAssertEqual(view.gpa, "69")
-        XCTAssertEqual(presentable.showErrorCalled, 0)
         
-        presenter.addGrade(text: "1000")
+        do {
+            try presenter.addGrade(text: "1000")
+            XCTFail("This should not be called")
+        } catch { }
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
         XCTAssertEqual(view.gpa, "69")
-        XCTAssertEqual(presentable.showErrorCalled, 1)
         
-        presenter.addGrade(text: "100")
+        try? presenter.addGrade(text: "100")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
         XCTAssertEqual(view.gpa, "74")
         
-        presenter.addGrade(text: "-30")
+        try? presenter.addGrade(text: "-30")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
         XCTAssertEqual(view.gpa, "74")
-        XCTAssertEqual(presentable.showErrorCalled, 2)
         
-        presenter.addGrade(text: "abc")
+        try? presenter.addGrade(text: "abc")
         XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
         XCTAssertEqual(view.gpa, "74")
-        XCTAssertEqual(presentable.showErrorCalled, 3)
     }
 }

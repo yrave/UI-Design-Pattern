@@ -15,8 +15,3 @@ protocol StudentPresentableView: class {
     func setStudentIDText(_ value: String)
     var newGradeTextFieldText: String? { get set }
 }
-
-protocol StudentPresentable: class {
-    var studentPresentableView: StudentPresentableView { get }
-    func showError()
-}

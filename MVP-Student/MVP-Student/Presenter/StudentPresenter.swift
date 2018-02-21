@@ -11,14 +11,11 @@ import UIKit
 
 class StudentPresenter {
 
-    init(presentable: StudentPresentable, student: Student) {
-        self.presentable = presentable
-        self.studentView = presentable.studentPresentableView
+    init(studentView: StudentPresentableView, student: Student) {
+        self.studentView = studentView
         self.student = student
-        setupStudent()
     }
 
-    private weak var presentable: StudentPresentable!
     private weak var studentView: StudentPresentableView!
 
     private var student: Student
@@ -30,24 +27,22 @@ class StudentPresenter {
     
     public func startSetup() {
         setupStudentGrades()
+        setupStudent()
     }
 
     private func setupStudentGrades() {
         self.studentView.setAllGradesText(student.grades.map({ "\($0)" }).joined(separator: ", "))
         self.studentView.setGradePointAverageText("\(student.grades.reduce(0, +) / student.grades.count)")
     }
+    
+    enum GradeError: Error {
+        case invalidInput
+    }
 
-    func addGrade(text: String?) {
-        guard let grade = text.flatMap({ Int($0) }) else {
-            presentable.showError()
-            return
-        }
-        do {
-            try student.add(grade: grade)
-            setupStudentGrades()
-            studentView.newGradeTextFieldText = ""
-        } catch {
-            presentable.showError()
-        }
+    func addGrade(text: String?) throws {
+        guard let grade = text.flatMap({ Int($0) }) else { throw GradeError.invalidInput }
+        try student.add(grade: grade)
+        setupStudentGrades()
+        studentView.newGradeTextFieldText = ""        
     }
 }

@@ -21,24 +21,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        studentPresenter = StudentPresenter(presentable: self, student: student)
+        studentPresenter = StudentPresenter(studentView: self.studentView, student: student)
+        studentPresenter.startSetup()
         studentView.newGradeTextField.delegate = self
-    }
-}
-
-extension ViewController: StudentPresentable {
-    var studentPresentableView: StudentPresentableView {
-        return self.studentView as StudentPresentableView
-    }
-    
-    func showError() {
-        //TODO: Show error
     }
 }
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        studentPresenter.addGrade(text: textField.text)
+        do {
+            try studentPresenter.addGrade(text: textField.text)
+        } catch { } //TODO: Show error
         return true
     }
 }
