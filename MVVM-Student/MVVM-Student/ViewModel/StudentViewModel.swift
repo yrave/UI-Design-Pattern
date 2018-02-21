@@ -10,20 +10,6 @@ import Foundation
 
 class StudentViewModel {
     private let student: Student
-    var updateGradeInputText: ((String) -> ())?
-    private func callUpdateGrade() {
-        self.updateGradeInputText?("")
-    }
-    var observeGradeAverage: ((String) -> ())? {
-        didSet { self.callObserveGradeAverage() }
-    }
-    private func callObserveGradeAverage() {
-        self.observeGradeAverage?(self.avg)
-    }
-    var observeGrades: ((String) -> ())? {
-        didSet { self.callObserveGrades() }
-    }
-    private func callObserveGrades() { self.observeGrades?(self.grades) }
     
     init(student: Student? = nil) {
         self.student = student ?? Student(
@@ -51,16 +37,27 @@ class StudentViewModel {
         case invalidInput
     }
     
-    fileprivate func updateObservers() {
+    func addGrade(text: String?) throws {
+        guard let grade = text.flatMap({ Int($0) }) else { throw GradeError.invalidInput }
+        try student.add(grade: grade)
         self.callUpdateGrade()
         self.callObserveGradeAverage()
         self.callObserveGrades()
     }
     
-    func addGrade(text: String?) throws {
-        guard let grade = text.flatMap({ Int($0) }) else { throw GradeError.invalidInput }
-        try student.add(grade: grade)
-        updateObservers()
+    var updateGradeInputText: ((String) -> ())?
+    private func callUpdateGrade() {
+        self.updateGradeInputText?("")
     }
+    var observeGradeAverage: ((String) -> ())? {
+        didSet { self.callObserveGradeAverage() }
+    }
+    private func callObserveGradeAverage() {
+        self.observeGradeAverage?(self.avg)
+    }
+    var observeGrades: ((String) -> ())? {
+        didSet { self.callObserveGrades() }
+    }
+    private func callObserveGrades() { self.observeGrades?(self.grades) }
 }
 

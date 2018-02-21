@@ -1,6 +1,6 @@
 //
 //  StudentView.swift
-//  MVC-Student
+//  MVVM-Student
 //
 //  Created by Yannick Rave on 19.02.18.
 //  Copyright © 2018 Yannick Rave. All rights reserved.
@@ -31,6 +31,10 @@ class StudentView: UIView {
         
         self.fullNameLabel.text = viewModel.fullName
         self.studentIDLabel.text = viewModel.studentID
+    }
+    
+    func textFieldChanged(_ text: String?) throws {
+        try self.viewModel.addGrade(text: text)
     }
 }
 

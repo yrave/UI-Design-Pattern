@@ -46,7 +46,10 @@ class MVVM_StudentTests: XCTestCase {
         XCTAssertEqual(avg, "67")
         XCTAssertEqual(input, "")
         
-        try? viewModel.addGrade(text: "Hi")
+        do {
+            try viewModel.addGrade(text: "Hi")
+            XCTFail("This should not be called!")
+        } catch { }
         XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
         XCTAssertEqual(avg, "67")
         
@@ -58,5 +61,4 @@ class MVVM_StudentTests: XCTestCase {
         XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
         XCTAssertEqual(avg, "67")
     }
-    
 }
