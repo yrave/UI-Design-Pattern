@@ -31,11 +31,15 @@ class StudentView: UIView {
         
         self.fullNameLabel.text = viewModel.fullName
         self.studentIDLabel.text = viewModel.studentID
-    }
-    
-    func textFieldChanged(_ text: String?) throws {
-        try self.viewModel.addGrade(text: text)
+        self.newGradeTextField.delegate = self
     }
 }
 
-
+extension StudentView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        do {
+            try self.viewModel.addGrade(text: textField.text)
+        } catch { } //TODO: Show error
+        return true
+    }
+}

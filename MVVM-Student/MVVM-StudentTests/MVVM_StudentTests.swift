@@ -30,6 +30,12 @@ class MVVM_StudentTests: XCTestCase {
         XCTAssertEqual(viewModel.studentID, "12345678")
     }
     
+    func testZeroGrades() {
+        let vm = StudentViewModel(student: Student(firstName: "", lastName: "", grades: [], studentID: 0))
+        XCTAssertEqual(vm.avg, "0")
+        XCTAssertEqual(vm.grades, "")
+    }
+    
     func testNewGrade() {
         var grades: String!
         var avg: String!
@@ -46,18 +52,16 @@ class MVVM_StudentTests: XCTestCase {
         XCTAssertEqual(avg, "67")
         XCTAssertEqual(input, "")
         
-        do {
-            try viewModel.addGrade(text: "Hi")
-            XCTFail("This should not be called!")
-        } catch { }
-        XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
-        XCTAssertEqual(avg, "67")
-        
         try? viewModel.addGrade(text: "-30")
         XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
         XCTAssertEqual(avg, "67")
         
         try? viewModel.addGrade(text: "200")
+        XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
+        XCTAssertEqual(avg, "67")
+        
+        
+        XCTAssertThrowsError(try viewModel.addGrade(text: "Hi"))
         XCTAssertEqual(grades, "40, 40, 80, 60, 85, 100")
         XCTAssertEqual(avg, "67")
     }

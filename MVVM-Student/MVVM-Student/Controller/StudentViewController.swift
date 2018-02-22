@@ -14,18 +14,5 @@ class StudentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.studentView.newGradeTextField.delegate = self
     }
 }
-
-
-extension StudentViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        do {
-            try self.studentView.textFieldChanged(textField.text)
-        } catch { } //TODO: Show error
-        return true
-    }
-}
-
