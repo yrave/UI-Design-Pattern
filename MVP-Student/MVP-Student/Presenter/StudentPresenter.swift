@@ -44,10 +44,18 @@ class StudentPresenter {
         case invalidInput
     }
 
-    func addGrade(text: String?) throws {
+    private func addGrade(text: String?) throws {
         guard let grade = text.flatMap({ Int($0) }) else { throw GradeError.invalidInput }
         try student.add(grade: grade)
         setupStudentGrades()
         studentView.newGradeTextFieldText = ""        
+    }
+}
+
+extension StudentPresenter: StudentViewDelegate {
+    func textFieldShouldReturn(text: String?) {
+        do {
+            try self.addGrade(text: text)
+        } catch { } //TODO: Show error
     }
 }

@@ -9,7 +9,26 @@
 import Foundation
 import UIKit
 
+protocol StudentViewDelegate: class {
+    func textFieldShouldReturn(text: String?)
+}
+
 class StudentView: UIView, StudentPresentableView {
+    @IBOutlet var fullNameLabel: UILabel!
+    @IBOutlet var gradePointAverageLabel: UILabel!
+    @IBOutlet var allGradesLabel: UILabel!
+    @IBOutlet var studentIDLabel: UILabel!
+    @IBOutlet var newGradeTextField: UITextField!
+    
+    weak var delegate: StudentViewDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.fullNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        self.newGradeTextField.delegate = self
+    }
+    
     var newGradeTextFieldText: String? {
         get {
             return self.newGradeTextField.text
@@ -34,16 +53,12 @@ class StudentView: UIView, StudentPresentableView {
     func setStudentIDText(_ value: String) {
         self.studentIDLabel.text = value
     }
+}
 
-    @IBOutlet var fullNameLabel: UILabel!
-    @IBOutlet var gradePointAverageLabel: UILabel!
-    @IBOutlet var allGradesLabel: UILabel!
-    @IBOutlet var studentIDLabel: UILabel!
-    @IBOutlet var newGradeTextField: UITextField!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        self.fullNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+extension StudentView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        delegate?.textFieldShouldReturn(text: textField.text)
+        return true
     }
 }

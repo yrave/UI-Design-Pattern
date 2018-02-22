@@ -23,15 +23,5 @@ class StudentViewController: UIViewController {
         
         studentPresenter = StudentPresenter(studentView: self.studentView, student: student)
         studentPresenter.startSetup()
-        studentView.newGradeTextField.delegate = self
-    }
-}
-
-extension StudentViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        do {
-            try studentPresenter.addGrade(text: textField.text)
-        } catch { } //TODO: Show error
-        return true
     }
 }

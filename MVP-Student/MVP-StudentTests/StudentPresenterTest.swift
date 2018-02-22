@@ -38,7 +38,7 @@ class StudentPresenterTest: XCTestCase {
     
     let student = Student(
         firstName: "John", lastName: "Doe",
-        grades: [50, 50, 100, 60, 85], studentID: 123456)
+        grades: [], studentID: 123456)
     
     lazy var view = StudentPresentableViewMock()
     lazy var presenter = StudentPresenter(studentView: self.view, student: self.student)
@@ -66,34 +66,37 @@ class StudentPresenterTest: XCTestCase {
     }
     
     func testGrades() {
-        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
+        XCTAssertEqual(view.grades, "")
+        ["50", "100"].forEach({ presenter.textFieldShouldReturn(text: $0) })
+        XCTAssertEqual(view.grades, "50, 100")
     }
     
     func testGPA() {
-        XCTAssertEqual(view.gpa, "69")
+        XCTAssertEqual(view.gpa, "0")
+        ["50", "100"].forEach({ presenter.textFieldShouldReturn(text: $0) })
+        XCTAssertEqual(view.gpa, "75")
     }
     
     func testNewGrades() {
-        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
-        XCTAssertEqual(view.gpa, "69")
+        XCTAssertEqual(view.grades, "")
+        XCTAssertEqual(view.gpa, "0")
+        ["50", "100"].forEach({ presenter.textFieldShouldReturn(text: $0) })
+
         
-        do {
-            try presenter.addGrade(text: "1000")
-            XCTFail("This should not be called")
-        } catch { }
-        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85")
-        XCTAssertEqual(view.gpa, "69")
+        presenter.textFieldShouldReturn(text: "1000")
+        XCTAssertEqual(view.grades, "50, 100")
+        XCTAssertEqual(view.gpa, "75")
         
-        try? presenter.addGrade(text: "100")
-        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
-        XCTAssertEqual(view.gpa, "74")
+        presenter.textFieldShouldReturn(text: "100")
+        XCTAssertEqual(view.grades, "50, 100, 100")
+        XCTAssertEqual(view.gpa, "83")
         
-        try? presenter.addGrade(text: "-30")
-        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
-        XCTAssertEqual(view.gpa, "74")
+        presenter.textFieldShouldReturn(text: "-30")
+        XCTAssertEqual(view.grades, "50, 100, 100")
+        XCTAssertEqual(view.gpa, "83")
         
-        try? presenter.addGrade(text: "abc")
-        XCTAssertEqual(view.grades, "50, 50, 100, 60, 85, 100")
-        XCTAssertEqual(view.gpa, "74")
+        presenter.textFieldShouldReturn(text: "abc")
+        XCTAssertEqual(view.grades, "50, 100, 100")
+        XCTAssertEqual(view.gpa, "83")
     }
 }
