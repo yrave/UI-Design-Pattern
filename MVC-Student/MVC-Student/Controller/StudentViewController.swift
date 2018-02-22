@@ -20,6 +20,7 @@ class StudentViewController: UIViewController {
         
         setupStudent()
         studentView.delegate = self
+        student.delegate = self
     }
 
     func setupStudent() {
@@ -39,8 +40,13 @@ extension StudentViewController: StudentViewDelegate {
         guard let grade = text.flatMap({ Int($0) }) else { return } //TODO: Show error
         do {
             try student.add(grade: grade)
-            setupStudentGrades()
             studentView.newGradeTextField.text = ""
         } catch { } //TODO: Show error
+    }
+}
+
+extension StudentViewController: StudentDelegate {
+    func didChangeGradeAndAverage() {
+        self.setupStudentGrades()
     }
 }

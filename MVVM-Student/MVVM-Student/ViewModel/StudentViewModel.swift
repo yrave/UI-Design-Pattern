@@ -8,13 +8,25 @@
 
 import Foundation
 
+protocol StudentViewModelDelegate: class {
+    func updateGradeInputText(text: String)
+    func observeGradeAverage(text: String)
+    func callObserveGrades(text: String)
+}
+
 class StudentViewModel {
     private let student: Student
+    weak var delegate: StudentViewModelDelegate? {
+        didSet {
+            didChangeGradeAndAverage()
+        }
+    }
     
     init(student: Student? = nil) {
         self.student = student ?? Student(
             firstName: "John", lastName: "Doe",
             grades: [50, 50, 100, 60, 85], studentID: 123456)
+        self.student.delegate = self
     }
     
     var fullName: String {
@@ -29,11 +41,6 @@ class StudentViewModel {
         return "\(student.studentID)"
     }
     
-    var avg: String {
-        guard student.grades.count > 0 else { return "0" }
-        return "\(student.grades.reduce(0, +) / student.grades.count)"
-    }
-    
     enum GradeError: Error {
         case invalidInput
     }
@@ -42,23 +49,22 @@ class StudentViewModel {
         guard let grade = text.flatMap({ Int($0) }) else { throw GradeError.invalidInput }
         try student.add(grade: grade)
         self.callUpdateGrade()
-        self.callObserveGradeAverage()
-        self.callObserveGrades()
     }
     
-    var updateGradeInputText: ((String) -> ())?
     private func callUpdateGrade() {
-        self.updateGradeInputText?("")
-    }
-    var observeGradeAverage: ((String) -> ())? {
-        didSet { self.callObserveGradeAverage() }
+        self.delegate?.updateGradeInputText(text: "")
     }
     private func callObserveGradeAverage() {
-        self.observeGradeAverage?(self.avg)
+        self.delegate?.observeGradeAverage(text: "\(student.average)")
     }
-    var observeGrades: ((String) -> ())? {
-        didSet { self.callObserveGrades() }
+    private func callObserveGrades() {
+        self.delegate?.callObserveGrades(text: self.grades)
     }
-    private func callObserveGrades() { self.observeGrades?(self.grades) }
 }
 
+extension StudentViewModel: StudentDelegate {
+    func didChangeGradeAndAverage() {
+        self.callObserveGrades()
+        self.callObserveGradeAverage()
+    }
+}

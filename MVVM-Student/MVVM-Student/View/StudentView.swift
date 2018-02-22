@@ -10,13 +10,7 @@ import Foundation
 import UIKit
 
 class StudentView: UIView {
-    lazy var viewModel: StudentViewModel = {
-        let vm = StudentViewModel()
-        vm.updateGradeInputText = { [weak self] in self?.newGradeTextField.text = $0 }
-        vm.observeGradeAverage = { [weak self] in self?.gradePointAverageLabel.text = $0 }
-        vm.observeGrades = { [weak self] in self?.allGradesLabel.text = $0 }
-        return vm
-    }()
+    lazy var viewModel: StudentViewModel = StudentViewModel()
     
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var gradePointAverageLabel: UILabel!
@@ -32,6 +26,8 @@ class StudentView: UIView {
         self.fullNameLabel.text = viewModel.fullName
         self.studentIDLabel.text = viewModel.studentID
         self.newGradeTextField.delegate = self
+        
+        viewModel.delegate = self
     }
 }
 
@@ -41,5 +37,19 @@ extension StudentView: UITextFieldDelegate {
             try self.viewModel.addGrade(text: textField.text)
         } catch { } //TODO: Show error
         return true
+    }
+}
+
+extension StudentView: StudentViewModelDelegate {
+    func updateGradeInputText(text: String) {
+        self.newGradeTextField.text = text
+    }
+    
+    func observeGradeAverage(text: String) {
+        self.gradePointAverageLabel.text = text
+    }
+    
+    func callObserveGrades(text: String) {
+        self.allGradesLabel.text = text
     }
 }

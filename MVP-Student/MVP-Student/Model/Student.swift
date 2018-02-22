@@ -8,12 +8,18 @@
 
 import Foundation
 
+protocol StudentDelegate: class {
+    func didChangeGradeAndAverage()
+}
+
 class Student {
     var firstName: String
     var lastName: String
     var grades: [Int] //0-100
     var studentID: Int
-
+    
+    weak var delegate: StudentDelegate?
+    
     init(firstName: String, lastName: String, grades: [Int], studentID: Int) {
         self.firstName = firstName
         self.lastName = lastName
@@ -29,5 +35,11 @@ class Student {
         guard grade <= 100 else { throw GradeError.tooHigh }
         guard grade >= 0 else { throw GradeError.tooLow }
         self.grades.append(grade)
+        delegate?.didChangeGradeAndAverage()
+    }
+    
+    var average: Int {
+        guard self.grades.count > 0 else { return 0 }
+        return self.grades.reduce(0, +) / self.grades.count
     }
 }

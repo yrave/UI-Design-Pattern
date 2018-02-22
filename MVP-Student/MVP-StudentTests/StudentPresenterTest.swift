@@ -14,7 +14,7 @@ class StudentPresentableViewMock: StudentPresentableView {
     var gpa: String = ""
     var grades: String = ""
     var studentID: String = ""
-    
+
     func setFullNameText(_ value: String) {
         self.fullName = value
     }
@@ -47,6 +47,7 @@ class StudentPresenterTest: XCTestCase {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         presenter.startSetup()
+        student.delegate = presenter
     }
 
     func testFullName() {
@@ -81,7 +82,6 @@ class StudentPresenterTest: XCTestCase {
         XCTAssertEqual(view.grades, "")
         XCTAssertEqual(view.gpa, "0")
         ["50", "100"].forEach({ presenter.textFieldShouldReturn(text: $0) })
-
         
         presenter.textFieldShouldReturn(text: "1000")
         XCTAssertEqual(view.grades, "50, 100")

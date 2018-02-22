@@ -32,12 +32,7 @@ class StudentPresenter {
 
     private func setupStudentGrades() {
         self.studentView.setAllGradesText(student.grades.map({ "\($0)" }).joined(separator: ", "))
-        self.studentView.setGradePointAverageText("\(self.average())")
-    }
-    
-    func average() -> Int {
-        guard student.grades.count > 0 else { return 0 }
-        return student.grades.reduce(0, +) / student.grades.count
+        self.studentView.setGradePointAverageText("\(student.average)")
     }
     
     enum GradeError: Error {
@@ -47,7 +42,6 @@ class StudentPresenter {
     private func addGrade(text: String?) throws {
         guard let grade = text.flatMap({ Int($0) }) else { throw GradeError.invalidInput }
         try student.add(grade: grade)
-        setupStudentGrades()
         studentView.newGradeTextFieldText = ""        
     }
 }
@@ -57,5 +51,11 @@ extension StudentPresenter: StudentViewDelegate {
         do {
             try self.addGrade(text: text)
         } catch { } //TODO: Show error
+    }
+}
+
+extension StudentPresenter: StudentDelegate {
+    func didChangeGradeAndAverage() {
+        self.setupStudentGrades()
     }
 }
