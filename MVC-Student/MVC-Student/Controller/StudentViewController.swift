@@ -19,7 +19,7 @@ class StudentViewController: UIViewController {
         super.viewDidLoad()
         
         setupStudent()
-        studentView.newGradeTextField.delegate = self
+        studentView.delegate = self
     }
 
     func setupStudent() {
@@ -30,23 +30,17 @@ class StudentViewController: UIViewController {
     
     func setupStudentGrades() {
         self.studentView.allGradesLabel.text = student.grades.map({ "\($0)" }).joined(separator: ", ")
-        self.studentView.gradePointAverageLabel.text = "\(self.average())"
-    }
-    
-    func average() -> Int {
-        guard student.grades.count > 0 else { return 0 }
-        return student.grades.reduce(0, +) / student.grades.count
+        self.studentView.gradePointAverageLabel.text = "\(student.average)"
     }
 }
 
-extension StudentViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let grade = textField.text.flatMap({ Int($0) }) else { return true } //TODO: Show error
+extension StudentViewController: StudentViewDelegate {
+    func textFieldShouldReturn(text: String?) {
+        guard let grade = text.flatMap({ Int($0) }) else { return } //TODO: Show error
         do {
             try student.add(grade: grade)
             setupStudentGrades()
-            textField.text = ""
+            studentView.newGradeTextField.text = ""
         } catch { } //TODO: Show error
-        return true
     }
 }

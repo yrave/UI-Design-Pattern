@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol StudentViewDelegate: class {
+    func textFieldShouldReturn(text: String?)
+}
+
 class StudentView: UIView {
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var gradePointAverageLabel: UILabel!
@@ -16,9 +20,19 @@ class StudentView: UIView {
     @IBOutlet var studentIDLabel: UILabel!
     @IBOutlet var newGradeTextField: UITextField!
     
+    weak var delegate: StudentViewDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.fullNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        self.newGradeTextField.delegate = self
+    }
+}
+
+extension StudentView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        delegate?.textFieldShouldReturn(text: textField.text)
+        return true
     }
 }

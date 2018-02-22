@@ -30,4 +30,9 @@ class Student {
         guard grade >= 0 else { throw GradeError.tooLow }
         self.grades.append(grade)
     }
+    
+    var average: Int {
+        guard self.grades.count > 0 else { return 0 }
+        return self.grades.reduce(0, +) / self.grades.count
+    }
 }
