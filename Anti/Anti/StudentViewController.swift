@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  StudentViewController.swift
 //  Anti
 //
 //  Created by Yannick Rave on 21.02.18.
@@ -8,25 +8,25 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class StudentViewController: UIViewController {
 
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var gradesLabel: UILabel!
     @IBOutlet var studentIDLabel: UILabel!
     @IBOutlet var averageLabel: UILabel!
     @IBOutlet var newGradeTextField: UITextField!
+    @IBOutlet var addButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.fullNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
-
+        self.addButton.addTarget(self, action: #selector(addGrade), for: .touchUpInside)
+        
         fullNameLabel.text = "John Doe"
         studentIDLabel.text = "12393"
         gradesLabel.text = "20, 60, 40, 100, 93"
         calcAverage()
-        
-        newGradeTextField.delegate = self
     }
     
     func calcAverage() {
@@ -52,15 +52,12 @@ class ViewController: UIViewController {
         self.gradesLabel.text = "\(self.gradesLabel.text ?? ""), \(grade)"
         calcAverage()
     }
-}
-
-extension ViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let grade = textField.text.flatMap({ Int($0) }) else { return true } //TODO: Show error
+    
+    @objc func addGrade() {
+        guard let grade = self.newGradeTextField.text.flatMap({ Int($0) }) else{ return } //TODO: Show error
         do {
             try self.add(grade: grade)
-            textField.text = ""
+            self.newGradeTextField.text = ""
         } catch { } //TODO: Show error
-        return true
     }
 }

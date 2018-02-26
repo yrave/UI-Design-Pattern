@@ -18,9 +18,9 @@ class StudentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupStudent()
         studentView.delegate = self
         student.delegate = self
+        setupStudent()
     }
 
     func setupStudent() {
