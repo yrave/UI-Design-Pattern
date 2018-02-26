@@ -17,6 +17,7 @@ class StudentView: UIView {
     @IBOutlet var allGradesLabel: UILabel!
     @IBOutlet var studentIDLabel: UILabel!
     @IBOutlet var newGradeTextField: UITextField!
+    @IBOutlet var addButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,18 +26,15 @@ class StudentView: UIView {
         
         self.fullNameLabel.text = viewModel.fullName
         self.studentIDLabel.text = viewModel.studentID
-        self.newGradeTextField.delegate = self
+        self.addButton.addTarget(self, action: #selector(didSelectAddButton), for: .touchUpInside)
         
         viewModel.delegate = self
     }
-}
-
-extension StudentView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    
+    @objc func didSelectAddButton() {
         do {
-            try self.viewModel.addGrade(text: textField.text)
+            try self.viewModel.addGrade(text: self.newGradeTextField.text)
         } catch { } //TODO: Show error
-        return true
     }
 }
 

@@ -14,6 +14,8 @@ class StudentPresenter {
     init(studentView: StudentPresentableView, student: Student) {
         self.studentView = studentView
         self.student = student
+        studentView.delegate = self
+        student.delegate = self
     }
 
     private weak var studentView: StudentPresentableView!
@@ -47,7 +49,7 @@ class StudentPresenter {
 }
 
 extension StudentPresenter: StudentViewDelegate {
-    func textFieldShouldReturn(text: String?) {
+    func didSelectAddButton(text: String?) {
         do {
             try self.addGrade(text: text)
         } catch { } //TODO: Show error

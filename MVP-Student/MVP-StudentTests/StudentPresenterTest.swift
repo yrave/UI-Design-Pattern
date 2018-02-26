@@ -10,6 +10,8 @@ import XCTest
 @testable import MVP_Student
 
 class StudentPresentableViewMock: StudentPresentableView {
+    weak var delegate: StudentViewDelegate?
+    
     var fullName: String = ""
     var gpa: String = ""
     var grades: String = ""
@@ -68,34 +70,34 @@ class StudentPresenterTest: XCTestCase {
     
     func testGrades() {
         XCTAssertEqual(view.grades, "")
-        ["50", "100"].forEach({ presenter.textFieldShouldReturn(text: $0) })
+        ["50", "100"].forEach({ presenter.didSelectAddButton(text: $0) })
         XCTAssertEqual(view.grades, "50, 100")
     }
     
     func testGPA() {
         XCTAssertEqual(view.gpa, "0")
-        ["50", "100"].forEach({ presenter.textFieldShouldReturn(text: $0) })
+        ["50", "100"].forEach({ presenter.didSelectAddButton(text: $0) })
         XCTAssertEqual(view.gpa, "75")
     }
     
     func testNewGrades() {
         XCTAssertEqual(view.grades, "")
         XCTAssertEqual(view.gpa, "0")
-        ["50", "100"].forEach({ presenter.textFieldShouldReturn(text: $0) })
+        ["50", "100"].forEach({ presenter.didSelectAddButton(text: $0) })
         
-        presenter.textFieldShouldReturn(text: "1000")
+        presenter.didSelectAddButton(text: "1000")
         XCTAssertEqual(view.grades, "50, 100")
         XCTAssertEqual(view.gpa, "75")
         
-        presenter.textFieldShouldReturn(text: "100")
+        presenter.didSelectAddButton(text: "100")
         XCTAssertEqual(view.grades, "50, 100, 100")
         XCTAssertEqual(view.gpa, "83")
         
-        presenter.textFieldShouldReturn(text: "-30")
+        presenter.didSelectAddButton(text: "-30")
         XCTAssertEqual(view.grades, "50, 100, 100")
         XCTAssertEqual(view.gpa, "83")
         
-        presenter.textFieldShouldReturn(text: "abc")
+        presenter.didSelectAddButton(text: "abc")
         XCTAssertEqual(view.grades, "50, 100, 100")
         XCTAssertEqual(view.gpa, "83")
     }

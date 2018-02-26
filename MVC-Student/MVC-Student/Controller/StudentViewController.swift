@@ -36,7 +36,7 @@ class StudentViewController: UIViewController {
 }
 
 extension StudentViewController: StudentViewDelegate {
-    func textFieldShouldReturn(text: String?) {
+    func didSelectAddButton(text: String?) {
         guard let grade = text.flatMap({ Int($0) }) else { return } //TODO: Show error
         do {
             try student.add(grade: grade)

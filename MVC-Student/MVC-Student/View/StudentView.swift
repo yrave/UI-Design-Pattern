@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol StudentViewDelegate: class {
-    func textFieldShouldReturn(text: String?)
+    func didSelectAddButton(text: String?)
 }
 
 class StudentView: UIView {
@@ -19,6 +19,7 @@ class StudentView: UIView {
     @IBOutlet var allGradesLabel: UILabel!
     @IBOutlet var studentIDLabel: UILabel!
     @IBOutlet var newGradeTextField: UITextField!
+    @IBOutlet var addButton: UIButton!
     
     weak var delegate: StudentViewDelegate?
     
@@ -26,13 +27,10 @@ class StudentView: UIView {
         super.awakeFromNib()
         
         self.fullNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
-        self.newGradeTextField.delegate = self
+        self.addButton.addTarget(self, action: #selector(didSelectAddButton), for: .touchUpInside)
     }
-}
-
-extension StudentView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        delegate?.textFieldShouldReturn(text: textField.text)
-        return true
+    
+    @objc func didSelectAddButton() {
+        delegate?.didSelectAddButton(text: self.newGradeTextField.text)
     }
 }
