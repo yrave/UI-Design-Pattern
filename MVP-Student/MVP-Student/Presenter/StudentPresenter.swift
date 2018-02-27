@@ -14,7 +14,6 @@ class StudentPresenter {
     init(studentView: StudentPresentableView, student: Student) {
         self.studentView = studentView
         self.student = student
-        studentView.delegate = self
         student.delegate = self
     }
 
@@ -46,9 +45,7 @@ class StudentPresenter {
         try student.add(grade: grade)
         studentView.newGradeTextFieldText = ""        
     }
-}
-
-extension StudentPresenter: StudentViewDelegate {
+    
     func didSelectAddButton(text: String?) {
         do {
             try self.addGrade(text: text)

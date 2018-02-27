@@ -1,6 +1,6 @@
 //
 //  StudentView.swift
-//  MVC-Student
+//  MVP-Student
 //
 //  Created by Yannick Rave on 19.02.18.
 //  Copyright © 2018 Yannick Rave. All rights reserved.
@@ -8,10 +8,6 @@
 
 import Foundation
 import UIKit
-
-protocol StudentViewDelegate: class {
-    func didSelectAddButton(text: String?)
-}
 
 class StudentView: UIView, StudentPresentableView {
     @IBOutlet var fullNameLabel: UILabel!
@@ -21,7 +17,7 @@ class StudentView: UIView, StudentPresentableView {
     @IBOutlet var newGradeTextField: UITextField!
     @IBOutlet var addButton: UIButton!
     
-    weak var delegate: StudentViewDelegate?
+    var presenter: StudentPresenter!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,6 +52,6 @@ class StudentView: UIView, StudentPresentableView {
     }
     
     @objc func didSelectAddButton() {
-        delegate?.didSelectAddButton(text: self.newGradeTextField.text)
+        presenter.didSelectAddButton(text: self.newGradeTextField.text)
     }
 }

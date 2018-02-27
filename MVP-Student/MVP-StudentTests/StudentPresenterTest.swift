@@ -9,9 +9,7 @@
 import XCTest
 @testable import MVP_Student
 
-class StudentPresentableViewMock: StudentPresentableView {
-    weak var delegate: StudentViewDelegate?
-    
+class StudentPresentableViewMock: StudentPresentableView {    
     var fullName: String = ""
     var gpa: String = ""
     var grades: String = ""

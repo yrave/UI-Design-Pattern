@@ -14,5 +14,4 @@ protocol StudentPresentableView: class {
     func setAllGradesText(_ value: String)
     func setStudentIDText(_ value: String)
     var newGradeTextFieldText: String? { get set }
-    weak var delegate: StudentViewDelegate? { get set }
 }
