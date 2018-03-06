@@ -11,6 +11,7 @@ import RxSwift
 
 class StudentViewModel {
     private let disposeBag = DisposeBag()
+    
     private let studentSubject: Variable<Student>
     lazy var fullName: Observable<String> = self.studentSubject.asObservable()
         .map({ "\($0.firstName) \($0.lastName)" })

@@ -11,8 +11,4 @@ import UIKit
 class StudentViewController: UIViewController {
     
     @IBOutlet var studentView: StudentView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 }

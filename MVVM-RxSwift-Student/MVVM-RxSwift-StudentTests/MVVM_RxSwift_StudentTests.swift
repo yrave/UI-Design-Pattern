@@ -7,30 +7,37 @@
 //
 
 import XCTest
+import RxTest
+import RxSwift
 @testable import MVVM_RxSwift_Student
 
 class MVVM_RxSwift_StudentTests: XCTestCase {
+    let disposeBag = DisposeBag()
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testStudent() {        
+        let student = Student(firstName: "Hi", lastName: "Ab", grades: [], studentID: 47)
+        let viewModel = StudentViewModel(student: student)
+        
+        let scheduler = TestScheduler(initialClock: 0)
+        let fn = scheduler.createObserver(String.self)
+        
+        viewModel.fullName.subscribe(fn).disposed(by: disposeBag)
+        viewModel.average.subscribe(fn).disposed(by: disposeBag)
+        viewModel.studentID.subscribe(fn).disposed(by: disposeBag)
+        viewModel.textFieldText.subscribe(fn).disposed(by: disposeBag)
+        viewModel.grades.subscribe(fn).disposed(by: disposeBag)
+        try? viewModel.addGrade(text: "20")
+        try? viewModel.addGrade(text: "-10")
+        try? viewModel.addGrade(text: "1000")
+        try? viewModel.addGrade(text: "abc")
+        
+        scheduler.start()
+        
+        _ = StudentViewModel()
     }
     
 }

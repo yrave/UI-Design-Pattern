@@ -27,18 +27,16 @@ class StudentView: UIView {
         
         self.fullNameLabel.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         
-        self.addButton.addTarget(self, action: #selector(didSelectAddButton), for: .touchUpInside)
+        self.addButton.rx.tap.subscribe(onNext: { [unowned self] _ in
+            do {
+                try self.viewModel.addGrade(text: self.newGradeTextField.text)
+            } catch { } //TODO: Show error
+        }).disposed(by: disposeBag)
         
         self.viewModel.fullName.bind(to: self.fullNameLabel.rx.text).disposed(by: disposeBag)
         self.viewModel.grades.bind(to: self.allGradesLabel.rx.text).disposed(by: disposeBag)
         self.viewModel.studentID.bind(to: self.studentIDLabel.rx.text).disposed(by: disposeBag)
         self.viewModel.textFieldText.bind(to: self.newGradeTextField.rx.text).disposed(by: disposeBag)
         self.viewModel.average.bind(to: self.gradePointAverageLabel.rx.text).disposed(by: disposeBag)
-    }
-    
-    @objc func didSelectAddButton() {
-        do {
-            try self.viewModel.addGrade(text: self.newGradeTextField.text)
-        } catch { } //TODO: Show error
     }
 }
