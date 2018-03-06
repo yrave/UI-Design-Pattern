@@ -9,7 +9,6 @@
 import UIKit
 
 class StudentViewController: UIViewController {
-    
     @IBOutlet var studentView: StudentView!
     let student = Student(
         firstName: "John", lastName: "Doe",

@@ -27,26 +27,18 @@ class StudentView: UIView, StudentPresentableView {
     }
     
     var newGradeTextFieldText: String? {
-        get {
-            return self.newGradeTextField.text
-        }
-        set {
-            self.newGradeTextField.text = newValue
-        }
+        get { return self.newGradeTextField.text }
+        set { self.newGradeTextField.text = newValue }
     }
-
     func setFullNameText(_ value: String) {
         self.fullNameLabel.text = value
     }
-
     func setGradePointAverageText(_ value: String) {
         self.gradePointAverageLabel.text = value
     }
-
     func setAllGradesText(_ value: String) {
         self.allGradesLabel.text = value
     }
-
     func setStudentIDText(_ value: String) {
         self.studentIDLabel.text = value
     }

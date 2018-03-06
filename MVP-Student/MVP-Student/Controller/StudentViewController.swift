@@ -24,6 +24,6 @@ class StudentViewController: UIViewController {
             studentView: self.studentView as StudentPresentableView,
             student: student)
         self.studentView.presenter = studentPresenter
-        studentPresenter.startSetup()
+        studentPresenter.setupStudent()
     }
 }

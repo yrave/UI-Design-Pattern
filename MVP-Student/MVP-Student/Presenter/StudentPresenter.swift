@@ -7,37 +7,22 @@
 //
 
 import Foundation
-import UIKit
 
 class StudentPresenter {
-
+    private weak var studentView: StudentPresentableView!
+    private var student: Student
+    
     init(studentView: StudentPresentableView, student: Student) {
         self.studentView = studentView
         self.student = student
         student.delegate = self
     }
-
-    private weak var studentView: StudentPresentableView!
-
-    private var student: Student
-
-    private func setupStudent() {
+    
+    func setupStudent() {
         self.studentView.setFullNameText("\(self.student.firstName) \(self.student.lastName)")
         self.studentView.setStudentIDText("\(student.studentID)")
-    }
-    
-    public func startSetup() {
-        setupStudentGrades()
-        setupStudent()
-    }
-
-    private func setupStudentGrades() {
         self.studentView.setAllGradesText(student.grades.map({ "\($0)" }).joined(separator: ", "))
         self.studentView.setGradePointAverageText("\(student.average)")
-    }
-    
-    enum GradeError: Error {
-        case invalidInput
     }
 
     private func addGrade(text: String?) throws {
@@ -51,10 +36,13 @@ class StudentPresenter {
             try self.addGrade(text: text)
         } catch { } //TODO: Show error
     }
+    enum GradeError: Error {
+        case invalidInput
+    }
 }
 
 extension StudentPresenter: StudentDelegate {
     func didChangeGradeAndAverage() {
-        self.setupStudentGrades()
+        self.setupStudent()
     }
 }
