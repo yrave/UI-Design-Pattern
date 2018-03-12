@@ -35,9 +35,11 @@ class StudentViewController: UIViewController {
 }
 
 extension StudentViewController: StudentViewDelegate {
+    enum GradeError: Error { case invalidInput }
     func didSelectAddButton(text: String?) {
-        guard let grade = text.flatMap({ Int($0) }) else { return } //TODO: Show error
         do {
+            guard let grade = text.flatMap({ Int($0) })
+                else { throw GradeError.invalidInput }
             try student.add(grade: grade)
             studentView.newGradeTextField.text = ""
         } catch { } //TODO: Show error
