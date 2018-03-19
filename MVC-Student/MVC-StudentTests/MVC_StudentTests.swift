@@ -11,7 +11,8 @@ import XCTest
 
 class MVC_StudentTests: XCTestCase {
     
-    let student = Student(firstName: "John", lastName: "Doe", grades: [80, 90], studentID: 3929)
+    let student = Student(firstName: "John", lastName: "Doe",
+                          grades: [80, 90], studentID: 3929)
     
     func testName() {
         XCTAssertEqual(student.firstName, "John")

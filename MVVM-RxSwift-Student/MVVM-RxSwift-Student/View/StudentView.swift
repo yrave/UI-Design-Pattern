@@ -13,7 +13,7 @@ import RxCocoa
 
 class StudentView: UIView {
     private let disposeBag = DisposeBag()
-    lazy var viewModel: StudentViewModel = StudentViewModel()
+    lazy var viewModel = StudentViewModelRx()
     
     @IBOutlet var fullNameLabel: UILabel!
     @IBOutlet var gradePointAverageLabel: UILabel!
